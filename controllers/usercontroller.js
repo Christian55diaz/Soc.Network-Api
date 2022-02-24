@@ -1,30 +1,36 @@
 const { User } = require ('../models')
-const { Thoughts } = require ('../models')
-const router = require('../routes/api/userroutes')
+// works now because you can open and close the const
+const userController = {
+    //post createUsers
+    createUsers({body}, res) {
+    User.create(body)
+    .then(dbUserData => res.json(dbUserData))
+    .catch(err => {
 
-//get allUsers
-const userController = { 
-    getAllUsers(req, res) {
-        User.find({})
+        console.log(err);
+        // status idk if send status works
+        // and .json(err) that way you can use the err message but in this case i think it will just say err so instead you can do err.message and that should i think come up with 
+        // mongodb or mongoose's customized error message
+        res.status(400).json(err.message);
+    })
+    },
+    
+    //get user by single id
+    getUsersById({params}, res) {
+        User.findOne({_id: params.id})
+        .populate({path: 'thoughts', select: '-__v'})
+        .populate({path: 'friends', select: '-__v'})
         .select('-__v')
-        .sort({ _id: -1})
-        .then(dbUserData => res.json(dbUserData))
+        // return if no user is found 
+        .then(dbUsersData => {
+            if(!dbUsersData) {
+                res.status(404).json({message: 'No User with this particular ID!'});
+                return; 
+            }
+            res.json(dbUsersData)
+        })
         .catch(err => {
             console.log(err);
-            res.sendStatus(400);
-        });
+            res.status(400).json(err)
+        })
     },
-
-}
-
-//post createUsers
-
-//get UsersById
-
-//put updateUsers
-
-//delete deleteUsers
-
-//post addFriend 
-
-//delete deleteFriend
