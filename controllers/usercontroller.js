@@ -47,3 +47,16 @@ const userController = {
             res.sendStatus(400);
         })
     },
+     //updating users with params
+     updateUsers({params, body}, res) {
+        //user finds one id and updates to a new one
+        Users.findOneAndUpdate({_id: params.id}, body, {new: true, runValidators: true})
+        .then(dbUsersData => {
+            if(!dbUsersData) {
+                res.status(404).json({message: 'user not found with this id try again lol'});
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => res.json(err))
+    },
