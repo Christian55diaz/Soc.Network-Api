@@ -76,3 +76,20 @@ const userController = {
       //delete friend 
       deleteFriend({ params }, res) {
         //find a user and update it from the id
+        Users.findOneAndUpdate({_id: params.id}, {$pull: { friends: params.friendId}}, {new: true})
+        .populate({path: 'friends', select: '-__v'})
+        .select('-__v')
+        .then(dbUsersData => {
+            if(!dbUsersData) {
+                res.status(404).json({message: 'user not found with this id try again lol'});
+                return;
+            }
+            res.json(dbUsersData);
+        })
+        .catch(err => res.status(400).json(err));
+    }
+
+};
+
+// Export module users controller
+module.exports = usersController; 
