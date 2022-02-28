@@ -7,8 +7,9 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+const routes= require('./routes')
 //app uses
-app.use(require('./routes'));
+app.use(routes);
 app.use (express.static('public'));
 
 //connect mongoose
@@ -17,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/populatedb', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-
+mongoose.set("useCreateIndex", true);
 mongoose.set('debug', true);
 
 app.listen(PORT, () => {

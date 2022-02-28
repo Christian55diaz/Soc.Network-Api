@@ -1,10 +1,10 @@
-const { User } = require ('../models')
+const { Users } = require ('../models')
 // works now because you can open and close the const
-const userController = {
+const UsersController = {
     //post createUsers
     createUsers({body}, res) {
-    User.create(body)
-    .then(dbUserData => res.json(dbUserData))
+    Users.create(body)
+    .then(dbUsersData => res.json(dbUsersData))
     .catch(err => {
 
         console.log(err);
@@ -15,19 +15,19 @@ const userController = {
     })
     },
     
-    //get user by single id
-    getUsersById({params}, res) {
-        User.findOne({_id: params.id})
+    //get Users by single id
+    getUserssById({params}, res) {
+        Users.findOne({_id: params.id})
         .populate({path: 'thoughts', select: '-__v'})
         .populate({path: 'friends', select: '-__v'})
         .select('-__v')
-        // return if no user is found 
-        .then(dbUsersData => {
-            if(!dbUsersData) {
-                res.status(404).json({message: 'No User with this particular ID!'});
+        // return if no Users is found 
+        .then(dbUserssData => {
+            if(!dbUserssData) {
+                res.status(404).json({message: 'No Users with this particular ID!'});
                 return; 
             }
-            res.json(dbUsersData)
+            res.json(dbUserssData)
         })
         .catch(err => {
             console.log(err);
@@ -36,60 +36,60 @@ const userController = {
     },
     //get allUsers
     getAllUsers(req, res) {
-        User.find({})
+        Users.find({})
         .populate({path: 'thoughts', select: '-__v'})
         .populate({path: 'friends', select: '-__v'})
         .select('-__v')
         .sort({ _id: -1})
-        .then(dbUserData => res.json(dbUserData))
+        .then(dbUsersData => res.json(dbUsersData))
         .catch(err => {
             console.log(err);
             res.sendStatus(400);
         })
     },
-     //updating users with params
+     //updating Users with params
      updateUsers({params, body}, res) {
-        //user finds one id and updates to a new one
+        //Users finds one id and updates to a new one
         Users.findOneAndUpdate({_id: params.id}, body, {new: true, runValidators: true})
-        .then(dbUsersData => {
-            if(!dbUsersData) {
-                res.status(404).json({message: 'user not found with this id try again lol'});
-                return;
-            }
-            res.json(dbUserData);
-        })
-        .catch(err => res.json(err))
-    },
-     //deleting the user by id
-     deleteUsers({params}, res) {
-        //find one user and delete it by id
-        Users.findOneAndDelete({_id: params.id})
-        .then(dbUsersData => {
-            if(!dbUsersData) {
-                res.status(404).json({message: 'user not found with this id try again lol'});
+        .then(dbUserssData => {
+            if(!dbUserssData) {
+                res.status(404).json({message: 'Users not found with this id try again lol'});
                 return;
             }
             res.json(dbUsersData);
+        })
+        .catch(err => res.json(err))
+    },
+     //deleting the Users by id
+     deleteUsers({params}, res) {
+        //find one Users and delete it by id
+        Users.findOneAndDelete({_id: params.id})
+        .then(dbUserssData => {
+            if(!dbUserssData) {
+                res.status(404).json({message: 'Users not found with this id try again lol'});
+                return;
+            }
+            res.json(dbUserssData);
         })
         .catch(err => res.status(400).json(err));
     },
       //delete friend 
       deleteFriend({ params }, res) {
-        //find a user and update it from the id
+        //find a Users and update it from the id
         Users.findOneAndUpdate({_id: params.id}, {$pull: { friends: params.friendId}}, {new: true})
         .populate({path: 'friends', select: '-__v'})
         .select('-__v')
-        .then(dbUsersData => {
-            if(!dbUsersData) {
-                res.status(404).json({message: 'user not found with this id try again lol'});
+        .then(dbUserssData => {
+            if(!dbUserssData) {
+                res.status(404).json({message: 'Users not found with this id try again lol'});
                 return;
             }
-            res.json(dbUsersData);
+            res.json(dbUserssData);
         })
         .catch(err => res.status(400).json(err));
     }
 
 };
 
-// Export module users controller
-module.exports = usersController; 
+// Export module Users controller
+module.exports = UsersController; 
