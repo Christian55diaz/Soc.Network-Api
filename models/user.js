@@ -16,3 +16,31 @@ const UserSchema = new Schema(
             match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
         }
     },
+    thoughts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Thoughts'
+    }],
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Users'
+    }]
+    },
+    {
+    toJSON: {
+        virtuals: true,
+        getters: true,
+    },
+    id: false
+    }
+)
+
+// whole count of friends
+UsersSchema.virtual('friendCount').get(function() {
+    return this.friends.length;
+})
+
+// model being created by the shcema
+const users = model('user', UsersSchema);
+
+// Export Users module
+module.exports = users;
