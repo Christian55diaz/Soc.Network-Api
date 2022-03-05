@@ -9,3 +9,11 @@ const {
     addFriend,
     deleteFriend
     } = require('../../controllers/usercontroller');
+
+    module.exports = router,  getAllUsers,
+    getUsersById,
+    createUsers,
+    updateUsers,
+    deleteUsers,
+    addFriend,
+    deleteFriend;

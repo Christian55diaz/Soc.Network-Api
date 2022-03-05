@@ -1,4 +1,4 @@
-const router = require ('express').Router();
+const router = require('express').Router();
 
 //const coming from thought controller to work with insomnia to allow for good routes
 const {
@@ -10,3 +10,5 @@ const {
    
     //we have to require the thought controller so that the routes link to the controller
 } = require('../../controllers/thoughtscontroller');
+
+module.exports = router, getAllThoughts, getThoughtsById, createThoughts, updateThoughts, deleteThoughts;

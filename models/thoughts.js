@@ -28,3 +28,5 @@ const ReactionsSchema = new Schema(
       }  
     }
 );
+
+const Thought = model("Thought", ReactionsSchema)
