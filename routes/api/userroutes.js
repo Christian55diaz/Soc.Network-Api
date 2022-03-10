@@ -26,10 +26,10 @@ const {
 
 // routes for the friends params
 // route to add a friend for a user and route to delete a friend from a user
-    // router
-    // .route('/:userId/friends/:friendId')
-    // .post(addFriend)
-    // .delete(deleteFriend)
+    router
+    .route('/:userId/friends/:friendId')
+    .post(addFriend)
+    .delete(deleteFriend)
 
 // export router
     module.exports = router;

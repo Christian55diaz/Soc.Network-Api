@@ -18,7 +18,7 @@ router
     .get(getAllThoughts)
     .post(createThoughts)
 // routes with params of id 
-// route to get thoughts by id, update thoughts by id, and delete thoughts by id
+// route to get thoughts by id, update thoughts by id, and delete thoughts by id.
 router
     .route('/:id')
     .get(getThoughtsById)
