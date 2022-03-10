@@ -1,5 +1,5 @@
 //here we have to require thoughts and users
-const {Thoughts, Users} = require('../models');
+const {Thoughts, User} = require('../models');
 
 //make a thoughts controller 
 const thoughtsController = {
@@ -8,7 +8,7 @@ const thoughtsController = {
         //create thoughts in body then the id
         Thoughts.create(body)
         .then(({_id}) => {
-            return Users.findOneAndUpdate({ _id: params.userId}, {$push: {thoughts: _id}}, {new: true});
+            return User.findOneAndUpdate({ _id: params.userId}, {$push: {thoughts: _id}}, {new: true});
         })
         .then(dbThoughtsData => {
             if(!dbThoughtsData) {
