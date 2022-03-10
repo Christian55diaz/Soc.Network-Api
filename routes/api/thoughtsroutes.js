@@ -11,4 +11,19 @@ const {
     //we have to require the thought controller so that the routes link to the controller
 } = require('../../controllers/thoughtscontroller');
 
-module.exports = router, getAllThoughts, getThoughtsById, createThoughts, updateThoughts, deleteThoughts;
+// making the routes usable
+// routes to get all thoughts and create thoughts
+router
+    .route('/')
+    .get(getAllThoughts)
+    .post(createThoughts)
+// routes with params of id 
+// route to get thoughts by id, update thoughts by id, and delete thoughts by id
+router
+    .route('/:id')
+    .get(getThoughtsById)
+    .put(updateThoughts)
+    .delete(deleteThoughts)
+
+// export router
+module.exports = router;
